@@ -1,0 +1,34 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega4809"</DEVICE>
+ <WORKING_DIR>F:\Fall_2020\ESE_280\Labatory\9\Code\PE0_and_PE2_intrs\PE0_and_PE2_intrs\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>F:\Fall_2020\ESE_280\Labatory\9\Code\PE0_and_PE2_intrs\PE0_and_PE2_intrs\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc\m4809def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>F:\Fall_2020\ESE_280\Labatory\9\Code\PE0_and_PE2_intrs\PE0_and_PE2_intrs\Debug\PE0_and_PE2_intrs.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>PE0_and_PE2_intrs.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>PE0_and_PE2_intrs.map</FILE>
+  <FILE>PE0_and_PE2_intrs.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <PB1_count><FILE>F:\Fall_2020\ESE_280\Labatory\9\Code\PE0_and_PE2_intrs\PE0_and_PE2_intrs\main.asm</FILE><LINE>28</LINE></PB1_count>
+  <PB2_count><FILE>F:\Fall_2020\ESE_280\Labatory\9\Code\PE0_and_PE2_intrs\PE0_and_PE2_intrs\main.asm</FILE><LINE>29</LINE></PB2_count>
+  <reset><FILE>F:\Fall_2020\ESE_280\Labatory\9\Code\PE0_and_PE2_intrs\PE0_and_PE2_intrs\main.asm</FILE><LINE>33</LINE></reset>
+  <start><FILE>F:\Fall_2020\ESE_280\Labatory\9\Code\PE0_and_PE2_intrs\PE0_and_PE2_intrs\main.asm</FILE><LINE>40</LINE></start>
+  <porte_isr><FILE>F:\Fall_2020\ESE_280\Labatory\9\Code\PE0_and_PE2_intrs\PE0_and_PE2_intrs\main.asm</FILE><LINE>66</LINE></porte_isr>
+  <main_loop><FILE>F:\Fall_2020\ESE_280\Labatory\9\Code\PE0_and_PE2_intrs\PE0_and_PE2_intrs\main.asm</FILE><LINE>60</LINE></main_loop>
+  <PB1_sub><FILE>F:\Fall_2020\ESE_280\Labatory\9\Code\PE0_and_PE2_intrs\PE0_and_PE2_intrs\main.asm</FILE><LINE>88</LINE></PB1_sub>
+  <PB2_sub><FILE>F:\Fall_2020\ESE_280\Labatory\9\Code\PE0_and_PE2_intrs\PE0_and_PE2_intrs\main.asm</FILE><LINE>97</LINE></PB2_sub>
+ </LABELS>
+</ASSEMBLER_INFO>

@@ -1,0 +1,45 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega4809"</DEVICE>
+ <WORKING_DIR>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.3.300\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.3.300\avrasm\inc\m4809def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\Debug\Task1-post_delay.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Task1-post_delay.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Task1-post_delay.map</FILE>
+  <FILE>Task1-post_delay.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <bcd_entries><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>32</LINE></bcd_entries>
+  <led_display><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>33</LINE></led_display>
+  <digit_num><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>34</LINE></digit_num>
+  <reset><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>38</LINE></reset>
+  <start><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>44</LINE></start>
+  <toggle_pin_ISR><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>96</LINE></toggle_pin_ISR>
+  <post_display><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>148</LINE></post_display>
+  <main_loop><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>93</LINE></main_loop>
+  <multiplex_display><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>262</LINE></multiplex_display>
+  <one_sec_delay><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>231</LINE></one_sec_delay>
+  <var_delay><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>196</LINE></var_delay>
+  <outer_loop><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>198</LINE></outer_loop>
+  <inner_loop><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>200</LINE></inner_loop>
+  <output_loop><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>273</LINE></output_loop>
+  <pos_zero><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>288</LINE></pos_zero>
+  <pos_one><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>291</LINE></pos_one>
+  <pos_two><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>295</LINE></pos_two>
+  <pos_three><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>299</LINE></pos_three>
+  <position><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task1-post_delay\Task1-post_delay\main.asm</FILE><LINE>303</LINE></position>
+ </LABELS>
+</ASSEMBLER_INFO>

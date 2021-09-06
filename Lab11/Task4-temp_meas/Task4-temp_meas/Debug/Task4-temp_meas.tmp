@@ -1,0 +1,64 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega4809"</DEVICE>
+ <WORKING_DIR>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc\m4809def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\Debug\Task4-temp_meas.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Task4-temp_meas.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Task4-temp_meas.map</FILE>
+  <FILE>Task4-temp_meas.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <bcd_entries><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>30</LINE></bcd_entries>
+  <led_display><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>31</LINE></led_display>
+  <digit_num><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>32</LINE></digit_num>
+  <reset><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>36</LINE></reset>
+  <start><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>44</LINE></start>
+  <toggle_pin_ISR><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>116</LINE></toggle_pin_ISR>
+  <analog_pin_ISR><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>145</LINE></analog_pin_ISR>
+  <post_display><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>337</LINE></post_display>
+  <main_loop><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>112</LINE></main_loop>
+  <signal_conv><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>195</LINE></signal_conv>
+  <multiplex_display><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>451</LINE></multiplex_display>
+  <mpy16u><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>295</LINE></mpy16u>
+  <right_shift_loop><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>209</LINE></right_shift_loop>
+  <bin2BCD16><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>541</LINE></bin2BCD16>
+  <hex_to_7seg><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>710</LINE></hex_to_7seg>
+  <m16u_1><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>301</LINE></m16u_1>
+  <noad8><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>304</LINE></noad8>
+  <one_sec_delay><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>420</LINE></one_sec_delay>
+  <var_delay><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>385</LINE></var_delay>
+  <outer_loop><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>387</LINE></outer_loop>
+  <inner_loop><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>389</LINE></inner_loop>
+  <output_loop><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>462</LINE></output_loop>
+  <pos_zero><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>477</LINE></pos_zero>
+  <pos_one><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>480</LINE></pos_one>
+  <pos_two><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>484</LINE></pos_two>
+  <pos_three><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>488</LINE></pos_three>
+  <position><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>492</LINE></position>
+  <tBCD0><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>524</LINE></tBCD0>
+  <tBCD1><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>525</LINE></tBCD1>
+  <tBCD2><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>526</LINE></tBCD2>
+  <bBCDx_1><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>553</LINE></bBCDx_1>
+  <bBCDx_2><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>577</LINE></bBCDx_2>
+  <bBCDx_3><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>581</LINE></bBCDx_3>
+  <mul10a><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>637</LINE></mul10a>
+  <mul10b><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>640</LINE></mul10b>
+  <m10_1><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>658</LINE></m10_1>
+  <BCD2bin16><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>671</LINE></BCD2bin16>
+  <hextable><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task4-temp_meas\Task4-temp_meas\main.asm</FILE><LINE>722</LINE></hextable>
+ </LABELS>
+</ASSEMBLER_INFO>

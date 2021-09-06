@@ -1,0 +1,60 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega4809"</DEVICE>
+ <WORKING_DIR>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc\m4809def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\Debug\Task3.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Task3.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Task3.map</FILE>
+  <FILE>Task3.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <bcd_entries><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>32</LINE></bcd_entries>
+  <led_display><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>33</LINE></led_display>
+  <digit_num><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>34</LINE></digit_num>
+  <reset><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>38</LINE></reset>
+  <start><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>46</LINE></start>
+  <toggle_pin_ISR><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>118</LINE></toggle_pin_ISR>
+  <analog_pin_ISR><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>147</LINE></analog_pin_ISR>
+  <post_display><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>260</LINE></post_display>
+  <main_loop><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>114</LINE></main_loop>
+  <signal_conv><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>195</LINE></signal_conv>
+  <multiplex_display><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>374</LINE></multiplex_display>
+  <hex_to_7seg><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>623</LINE></hex_to_7seg>
+  <one_sec_delay><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>343</LINE></one_sec_delay>
+  <var_delay><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>308</LINE></var_delay>
+  <outer_loop><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>310</LINE></outer_loop>
+  <inner_loop><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>312</LINE></inner_loop>
+  <output_loop><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>385</LINE></output_loop>
+  <pos_zero><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>400</LINE></pos_zero>
+  <pos_one><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>403</LINE></pos_one>
+  <pos_two><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>407</LINE></pos_two>
+  <pos_three><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>411</LINE></pos_three>
+  <position><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>415</LINE></position>
+  <tBCD0><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>444</LINE></tBCD0>
+  <tBCD1><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>445</LINE></tBCD1>
+  <tBCD2><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>446</LINE></tBCD2>
+  <bin2BCD16><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>461</LINE></bin2BCD16>
+  <bBCDx_1><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>473</LINE></bBCDx_1>
+  <bBCDx_2><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>497</LINE></bBCDx_2>
+  <bBCDx_3><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>501</LINE></bBCDx_3>
+  <mul10a><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>552</LINE></mul10a>
+  <mul10b><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>554</LINE></mul10b>
+  <m10_1><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>571</LINE></m10_1>
+  <BCD2bin16><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>584</LINE></BCD2bin16>
+  <hextable><FILE>F:\Fall_2020\ESE_280\Labatory\11\Code\Task3\Task3\main.asm</FILE><LINE>635</LINE></hextable>
+ </LABELS>
+</ASSEMBLER_INFO>
