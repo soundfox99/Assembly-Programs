@@ -1,0 +1,33 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega4809"</DEVICE>
+ <WORKING_DIR>F:\Fall_2020\ESE_280\Labatory\5\Code\pb_sfwe_debounce_count_bin\pb_sfwe_debounce_count_bin\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>F:\Fall_2020\ESE_280\Labatory\5\Code\pb_sfwe_debounce_count_bin\pb_sfwe_debounce_count_bin\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc\m4809def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>F:\Fall_2020\ESE_280\Labatory\5\Code\pb_sfwe_debounce_count_bin\pb_sfwe_debounce_count_bin\Debug\pb_sfwe_debounce_count_bin.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>pb_sfwe_debounce_count_bin.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>pb_sfwe_debounce_count_bin.map</FILE>
+  <FILE>pb_sfwe_debounce_count_bin.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <start><FILE>F:\Fall_2020\ESE_280\Labatory\5\Code\pb_sfwe_debounce_count_bin\pb_sfwe_debounce_count_bin\main.asm</FILE><LINE>10</LINE></start>
+  <main_loop><FILE>F:\Fall_2020\ESE_280\Labatory\5\Code\pb_sfwe_debounce_count_bin\pb_sfwe_debounce_count_bin\main.asm</FILE><LINE>19</LINE></main_loop>
+  <var_delay><FILE>F:\Fall_2020\ESE_280\Labatory\5\Code\pb_sfwe_debounce_count_bin\pb_sfwe_debounce_count_bin\main.asm</FILE><LINE>47</LINE></var_delay>
+  <rising_edge><FILE>F:\Fall_2020\ESE_280\Labatory\5\Code\pb_sfwe_debounce_count_bin\pb_sfwe_debounce_count_bin\main.asm</FILE><LINE>29</LINE></rising_edge>
+  <change_barled><FILE>F:\Fall_2020\ESE_280\Labatory\5\Code\pb_sfwe_debounce_count_bin\pb_sfwe_debounce_count_bin\main.asm</FILE><LINE>36</LINE></change_barled>
+  <outer_loop><FILE>F:\Fall_2020\ESE_280\Labatory\5\Code\pb_sfwe_debounce_count_bin\pb_sfwe_debounce_count_bin\main.asm</FILE><LINE>49</LINE></outer_loop>
+  <inner_loop><FILE>F:\Fall_2020\ESE_280\Labatory\5\Code\pb_sfwe_debounce_count_bin\pb_sfwe_debounce_count_bin\main.asm</FILE><LINE>51</LINE></inner_loop>
+ </LABELS>
+</ASSEMBLER_INFO>

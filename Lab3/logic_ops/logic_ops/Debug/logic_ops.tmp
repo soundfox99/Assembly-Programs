@@ -1,0 +1,33 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega4809"</DEVICE>
+ <WORKING_DIR>F:\Fall_2020\ESE_280\Labatory\3\Code\logic_ops\logic_ops\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>F:\Fall_2020\ESE_280\Labatory\3\Code\logic_ops\logic_ops\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc\m4809def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>F:\Fall_2020\ESE_280\Labatory\3\Code\logic_ops\logic_ops\Debug\logic_ops.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>logic_ops.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>logic_ops.map</FILE>
+  <FILE>logic_ops.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <start><FILE>F:\Fall_2020\ESE_280\Labatory\3\Code\logic_ops\logic_ops\main.asm</FILE><LINE>10</LINE></start>
+  <main_loop><FILE>F:\Fall_2020\ESE_280\Labatory\3\Code\logic_ops\logic_ops\main.asm</FILE><LINE>17</LINE></main_loop>
+  <and_fcn><FILE>F:\Fall_2020\ESE_280\Labatory\3\Code\logic_ops\logic_ops\main.asm</FILE><LINE>37</LINE></and_fcn>
+  <or_fcn><FILE>F:\Fall_2020\ESE_280\Labatory\3\Code\logic_ops\logic_ops\main.asm</FILE><LINE>40</LINE></or_fcn>
+  <xor_fcn><FILE>F:\Fall_2020\ESE_280\Labatory\3\Code\logic_ops\logic_ops\main.asm</FILE><LINE>43</LINE></xor_fcn>
+  <not_fcn><FILE>F:\Fall_2020\ESE_280\Labatory\3\Code\logic_ops\logic_ops\main.asm</FILE><LINE>33</LINE></not_fcn>
+  <output><FILE>F:\Fall_2020\ESE_280\Labatory\3\Code\logic_ops\logic_ops\main.asm</FILE><LINE>45</LINE></output>
+ </LABELS>
+</ASSEMBLER_INFO>

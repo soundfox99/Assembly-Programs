@@ -1,0 +1,28 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega4809"</DEVICE>
+ <WORKING_DIR>F:\Fall_2020\ESE_280\Labatory\3\Code\sws_positions\sws_positions\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>F:\Fall_2020\ESE_280\Labatory\3\Code\sws_positions\sws_positions\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc\m4809def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>F:\Fall_2020\ESE_280\Labatory\3\Code\sws_positions\sws_positions\Debug\sws_positions.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>sws_positions.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>sws_positions.map</FILE>
+  <FILE>sws_positions.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <start><FILE>F:\Fall_2020\ESE_280\Labatory\3\Code\sws_positions\sws_positions\main.asm</FILE><LINE>10</LINE></start>
+  <again><FILE>F:\Fall_2020\ESE_280\Labatory\3\Code\sws_positions\sws_positions\main.asm</FILE><LINE>18</LINE></again>
+ </LABELS>
+</ASSEMBLER_INFO>
