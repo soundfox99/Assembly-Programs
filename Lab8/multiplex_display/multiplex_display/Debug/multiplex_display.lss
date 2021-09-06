@@ -1,0 +1,175 @@
+
+AVRASM ver. 2.2.7  F:\Fall_2020\ESE_280\Labatory\8\Code\multiplex_display\multiplex_display\main.asm Fri Oct 30 09:10:59 2020
+
+F:\Fall_2020\ESE_280\Labatory\8\Code\multiplex_display\multiplex_display\main.asm(21): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc\m4809def.inc'
+F:\Fall_2020\ESE_280\Labatory\8\Code\multiplex_display\multiplex_display\main.asm(21): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc\m4809def.inc'
+                                 
+                                 
+                                 ;*
+                                 ;* Title: multiplex_display
+                                 ;* Author:	Aditya Jindal
+                                 ;* Version: 1.0
+                                 ;* Last updated: 10-29-2020
+                                 ;* Target: ATmega4809
+                                 ;*
+                                 ;* DESCRIPTION: outputs the segment values for the 
+                                 ;*	next multiplexed digit to be displayed and turns
+                                 ;*	ON that digit
+                                 ;* 
+                                 ;* 
+                                 ;*
+                                 ;*
+                                 ;* VERSION HISTORY
+                                 ;* 1.0 Original version
+                                 ;***************************************************
+                                 
+                                 .list
+                                 
+                                 ;* Define varaibles
+                                 .dseg
+002800                           led_display: .byte 4
+002804                           digit_num: .byte 1
+                                 .cseg
+                                 
+                                 ;Task 2
+                                 start:
+000000 ef0f                      	ldi r16, 0xFF ;make r16 all 1s
+000001 b90c                      	out VPORTD_DIR, r16; make portD to output
+000002 ef00                      	ldi r16, 0xF0
+000003 b908                      	out VPORTC_DIR, r16 ;top pins of portC to output
+                                 
+000004 e000                      	ldi r16, 0x00;
+000005 9300 2804                 	sts digit_num, r16 ;Initialize digit_num variable 
+                                 
+                                 main_loop:
+000007 d001                      	rcall multiplex_display
+                                 
+000008 cffe                      	rjmp main_loop
+                                 
+                                 ;**************************************************
+                                 ;* 
+                                 ;* "multiplex_display"
+                                 ;*
+                                 ;* Description: outputs the segment values for the 
+                                 ;*	next multiplexed digit to be displayed and turns
+                                 ;*	ON that digit
+                                 ;*
+                                 ;* Author: Aditya Jindal
+                                 ;* Version: 1.0
+                                 ;* Last updated: 10-29-2020
+                                 ;* Target: ATmega4809
+                                 ;* Number of words: 32
+                                 ;* Number of cycles: 36
+                                 ;* Low registers modified: none
+                                 ;* High registers modified: r16, r17, r18, r20, YH, YL
+                                 ;*
+                                 ;* Parameters: none
+                                 ;* Returns: none
+                                 ;*
+                                 ;* Notes: 
+                                 ;*
+                                 ;***********************************************
+                                 
+                                 multiplex_display:
+000009 9100 2804                 	lds r16, digit_num ;load digit num into r16
+00000b 7003                      	andi r16, 0x03	;mask it to get lsb
+00000c 2f10                      	mov r17,r16	;make a copy of r16
+                                 	
+00000d 9310 2804                 	sts digit_num, r17	;load r17 into variable
+                                 
+00000f e0c0                      	ldi YL, LOW(led_display)	;set pointer
+000010 e2d8                      	ldi YH, HIGH(led_display)
+                                 	
+000011 9503                      	inc r16	;increment register
+                                 output_loop:
+000012 950a                      	dec r16	;decremnt register
+000013 9129                      	ld r18,Y+	;store incremented pointer value
+000014 f7e9                      	brne output_loop
+                                 
+                                 	
+000015 3010                      	cpi r17,0 ;demux r17 to choose correct anode
+000016 f031                      	breq pos_zero	;branch to the right position
+000017 3011                      	cpi r17,1	
+000018 f031                      	breq pos_one
+000019 3012                      	cpi r17,2	
+00001a f031                      	breq pos_two
+00001b 3013                      	cpi r17,3	
+00001c f031                      	breq pos_three
+                                 
+                                 pos_zero:
+00001d ee4f                      	ldi r20, 0xEF	;set r20 to the PC value
+00001e c006                      	rjmp position	;branch to position
+                                 pos_one:
+00001f ed4f                      	ldi r20,0xDF
+000020 c004                      	rjmp position
+                                 
+                                 pos_two:
+000021 eb4f                      	ldi r20,0xBF
+000022 c002                      	rjmp position
+                                 
+                                 pos_three:
+000023 e74f                      	ldi r20, 0x7F
+000024 c000                      	rjmp position
+                                 
+                                 position:
+000025 ef3f                      	ldi r19, 0xFF
+000026 b939                      	out VPORTC_OUT, r19	;turn off digit to modigy
+000027 b92d                      	out VPORTD_OUT, r18	;output the right segment value
+000028 b949                      	out VPORTC_OUT, r20 ;power common anode
+000029 9513                      	inc r17	;increment register
+00002a 9310 2804                 	sts digit_num, r17 ;store register in variable
+
+
+RESOURCE USE INFORMATION
+------------------------
+
+Notice:
+The register and instruction counts are symbol table hit counts,
+and hence implicitly used resources are not counted, eg, the
+'lpm' instruction without operands implicitly uses r0 and z,
+none of which are counted.
+
+x,y,z are separate entities in the symbol table and are
+counted separately from r26..r31 here.
+
+.dseg memory usage only counts static data declared with .byte
+
+"ATmega4809" register use summary:
+x  :   0 y  :   1 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
+r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
+r13:   0 r14:   0 r15:   0 r16:  11 r17:   8 r18:   2 r19:   2 r20:   5 
+r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   1 
+r29:   1 r30:   0 r31:   0 
+Registers used: 8 out of 35 (22.9%)
+
+"ATmega4809" instruction use summary:
+.lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
+andi  :   1 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :   4 brge  :   0 brhc  :   0 
+brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
+brne  :   1 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
+cpi   :   4 cpse  :   0 dec   :   1 des   :   0 eor   :   0 fmul  :   0 
+fmuls :   0 fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   2 
+jmp   :   0 ld    :   1 ldd   :   0 ldi   :  10 lds   :   1 lpm   :   0 
+lsl   :   0 lsr   :   0 mov   :   1 movw  :   0 mul   :   0 muls  :   0 
+mulsu :   0 neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   5 
+pop   :   0 push  :   0 rcall :   1 ret   :   1 reti  :   0 rjmp  :   5 
+rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 
+sbis  :   0 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 
+seh   :   0 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 
+sev   :   0 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 
+sts   :   3 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
+
+Instructions used: 15 out of 114 (13.2%)
+
+"ATmega4809" memory use summary [bytes]:
+Segment   Begin    End      Code   Data   Used    Size   Use%
+---------------------------------------------------------------
+[.cseg] 0x000000 0x00005a     90      0     90   49152   0.2%
+[.dseg] 0x002800 0x002805      0      5      5    6144   0.1%
+[.eseg] 0x000000 0x000000      0      0      0     256   0.0%
+
+Assembly complete, 0 errors, 0 warnings

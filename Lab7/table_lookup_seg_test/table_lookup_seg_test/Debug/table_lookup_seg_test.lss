@@ -1,0 +1,204 @@
+
+AVRASM ver. 2.2.7  F:\Fall_2020\ESE_280\Labatory\7\Code\table_lookup_seg_test\table_lookup_seg_test\main.asm Fri Oct 23 10:05:44 2020
+
+F:\Fall_2020\ESE_280\Labatory\7\Code\table_lookup_seg_test\table_lookup_seg_test\main.asm(26): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc\m4809def.inc'
+F:\Fall_2020\ESE_280\Labatory\7\Code\table_lookup_seg_test\table_lookup_seg_test\main.asm(26): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc\m4809def.inc'
+                                 
+                                 
+                                 ; table_lookup_seg_test.asm
+                                 ;
+                                 ; Description: The program checks all of the 7-Segment
+                                 ;	displays and segments to make sure they are working
+                                 ;
+                                 ; Author : Aditya Jindal 112835035
+                                 ; Created: 10/19/2020 11:19:42 PM
+                                 ;
+                                 ; Register Assignments/Purpose
+                                 ;	r16 = GP = general purpose, assign initial port conditions
+                                 ;		= used to read input from VPORTA
+                                 ;		= used in hex_to_7seg
+                                 ;	r17 = used as decrement counter in reverse_bits
+                                 ;	r18 = used to store altered input value 
+                                 ;	r19 = used as a mask in rever_bits
+                                 ;
+                                 ;
+                                 ; Registers altered: r16, r17, r18, r19
+                                 ;
+                                 ; Section no.: 4
+                                 ; Experiment no.: 7
+                                 ; Bench no.: 7
+                                 
+                                 .list
+                                 
+                                 ; Task 2
+                                 start:
+000000 e000                      	ldi r16, 0x00		;load with all zeros
+000001 b900                      	out VPORTA_DIR, r16	;Set port A to input
+                                 
+000002 9a44                      	sbi VPORTC_DIR, 4	;set 7 bit to output
+                                 
+000003 984c                      	cbi VPORTC_OUT, 4	;set PC7 to on
+                                 
+000004 ef0f                      	ldi r16, 0xFF		;load with all ones
+000005 b90c                      	out VPORTD_DIR, r16		;Set Port D to output
+                                 	
+000006 9880                      	cbi VPORTE_DIR, 0	;set PE0 to input
+000007 9a81                      	sbi VPORTE_DIR, 1	;set flip flop clear, asserted low
+                                 
+000008 9889                      	cbi VPORTE_OUT, 1	;clear flip flop
+000009 9a89                      	sbi VPORTE_OUT, 1	;stop clearing flip flop
+                                 
+                                 main_loop:
+00000a 9b90                      	sbis VPORTE_IN, 0	;skips if push button is pressed
+00000b cffe                      	rjmp main_loop		;while push button is not pushed causes loop
+                                 
+00000c b102                      	in r16, VPORTA_IN	;load the switch values
+00000d d007                      	rcall reverse_bits	;call subroutine to reverse bits
+00000e d010                      	rcall hex_to_7seg	;call the convert sbrt
+00000f b92d                      	out VPORTD_OUT, r18		;output result
+                                 
+000010 9889                      	cbi VPORTE_OUT, 1	;clear flip flop
+000011 9a89                      	sbi VPORTE_OUT, 1	;stop clearing flip flop
+                                 
+                                 rising_edge:
+000012 9990                      	sbic VPORTE_IN, 0	;skips if the push button is released
+000013 cffe                      	rjmp rising_edge	;causes loop while the button is pressed
+                                 
+000014 cff5                      	rjmp main_loop
+                                 
+                                 
+                                 ;**********************************************************
+                                 ;* 
+                                 ;* "reverse_bits" - Reverse the order of a registers bits
+                                 ;*
+                                 ;* Description: Subroutine reverses the order of a registers bits
+                                 ;*
+                                 ;* Author:						Aditya Jindal
+                                 ;* Version:						1.0						
+                                 ;* Last updated:				10202020
+                                 ;* Target:						ATmega4809
+                                 ;* Number of words:				11
+                                 ;* Number of cycles:			63
+                                 ;* Low registers modified:		r16, r17, r18, r19		
+                                 ;* High registers modified:		r18
+                                 ;*
+                                 ;* Parameters: r16: with loaded register value
+                                 ;* Returns: r18: reversed register value
+                                 ;*
+                                 ;* Notes: 
+                                 ;*
+                                 ;********************************************************
+                                 
+                                 reverse_bits:
+000015 e017                      	ldi r17, 7
+000016 e020                      	ldi r18, 0x00
+                                 reverse_bit_loop:
+000017 e830                      	ldi r19, 0x80
+000018 2330                      	and r19, r16
+000019 2b23                      	or r18, r19
+00001a 9526                      	lsr r18
+00001b 0f00                      	lsl r16
+00001c 951a                      	dec r17
+00001d f7c9                      	brne reverse_bit_loop
+                                 	
+00001e 9508                      	ret
+                                 
+                                 ;******************************************************
+                                 ;* 
+                                 ;* "hex_to_7seg" - Hexadecimal to Seven Segment Conversion
+                                 ;*
+                                 ;* Description: Converts a right justified hexadecimal digit 
+                                 ;*to the seven segment pattern required to display it. 
+                                 ;*Pattern is right justified a through g. 
+                                 ;*Pattern uses 0s to turn segments on ON.
+                                 ;*
+                                 ;* Author:						Ken Short
+                                 ;* Version:						1.0						
+                                 ;* Last updated:				101620
+                                 ;* Target:						ATmega4809
+                                 ;* Number of words:				8
+                                 ;* Number of cycles:			13
+                                 ;* Low registers modified:		none		
+                                 ;* High registers modified:		r16, r18, ZL, ZH
+                                 ;*
+                                 ;* Parameters: r18: right justified hex digit, high nibble 0
+                                 ;* Returns: r18: segment values a through g right justified
+                                 ;*
+                                 ;* Notes: 
+                                 ;*
+                                 ;*****************************************************
+                                 
+                                 hex_to_7seg:
+00001f 702f                      	andi r18, 0x0F				;clear ms nibble
+000020 e0f0                          ldi ZH, HIGH(hextable * 2)  ;set Z to point to start of table
+000021 e4ee                          ldi ZL, LOW(hextable * 2)
+000022 e000                          ldi r16, $00                ;add offset to Z pointer
+000023 0fe2                          add ZL, r18
+000024 1ff0                          adc ZH, r16
+000025 9124                          lpm r18, Z                  ;load byte from table pointed by Z
+000026 9508                      	ret
+                                 
+                                     ;Table of segment values to display digits 0 - F
+                                     ;!!! seven values must be added - verify all values
+000027 4f01
+000028 0612
+000029 244c
+00002a 0f20
+00002b 0c00
+00002c 6008
+00002d 4231
+
+
+RESOURCE USE INFORMATION
+------------------------
+
+Notice:
+The register and instruction counts are symbol table hit counts,
+and hence implicitly used resources are not counted, eg, the
+'lpm' instruction without operands implicitly uses r0 and z,
+none of which are counted.
+
+x,y,z are separate entities in the symbol table and are
+counted separately from r26..r31 here.
+
+.dseg memory usage only counts static data declared with .byte
+
+"ATmega4809" register use summary:
+x  :   0 y  :   0 z  :   1 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
+r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
+r13:   0 r14:   0 r15:   0 r16:   9 r17:   2 r18:   7 r19:   3 r20:   0 
+r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
+r29:   0 r30:   2 r31:   2 
+Registers used: 7 out of 35 (20.0%)
+
+"ATmega4809" instruction use summary:
+.lds  :   0 .sts  :   0 adc   :   1 add   :   1 adiw  :   0 and   :   1 
+andi  :   1 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
+brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
+brne  :   1 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   4 cbr   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
+cpi   :   0 cpse  :   0 dec   :   1 des   :   0 eor   :   0 fmul  :   0 
+fmuls :   0 fmulsu:   0 icall :   0 ijmp  :   0 in    :   1 inc   :   0 
+jmp   :   0 ld    :   0 ldd   :   0 ldi   :   8 lds   :   0 lpm   :   2 
+lsl   :   1 lsr   :   1 mov   :   0 movw  :   0 mul   :   0 muls  :   0 
+mulsu :   0 neg   :   0 nop   :   0 or    :   1 ori   :   0 out   :   3 
+pop   :   0 push  :   0 rcall :   2 ret   :   2 reti  :   0 rjmp  :   3 
+rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   4 sbic  :   1 
+sbis  :   1 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 
+seh   :   0 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 
+sev   :   0 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 
+sts   :   0 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
+
+Instructions used: 20 out of 114 (17.5%)
+
+"ATmega4809" memory use summary [bytes]:
+Segment   Begin    End      Code   Data   Used    Size   Use%
+---------------------------------------------------------------
+[.cseg] 0x000000 0x00005e     78     16     94   49152   0.2%
+[.dseg] 0x002800 0x002800      0      0      0    6144   0.0%
+[.eseg] 0x000000 0x000000      0      0      0     256   0.0%
+
+Assembly complete, 0 errors, 0 warnings

@@ -1,0 +1,614 @@
+
+AVRASM ver. 2.2.7  F:\Fall_2020\ESE_280\Labatory\9\Code\bcd_to_hex_intr_ver\bcd_to_hex_intr_ver\main.asm Fri Nov 20 09:40:09 2020
+
+F:\Fall_2020\ESE_280\Labatory\9\Code\bcd_to_hex_intr_ver\bcd_to_hex_intr_ver\main.asm(24): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc\m4809def.inc'
+F:\Fall_2020\ESE_280\Labatory\9\Code\bcd_to_hex_intr_ver\bcd_to_hex_intr_ver\main.asm(434): warning: Register r14 already defined by the .DEF directive
+F:\Fall_2020\ESE_280\Labatory\9\Code\bcd_to_hex_intr_ver\bcd_to_hex_intr_ver\main.asm(435): warning: Register r15 already defined by the .DEF directive
+F:\Fall_2020\ESE_280\Labatory\9\Code\bcd_to_hex_intr_ver\bcd_to_hex_intr_ver\main.asm(24): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\avrasm\inc\m4809def.inc'
+                                 
+                                 
+                                 ;*
+                                 ;* Title: bdc_to_hex_intr_ver
+                                 ;* Author: Aditya Jindal
+                                 ;* Version:	1.0
+                                 ;* Last updated: 10292020
+                                 ;* Target: ATmega4809
+                                 ;*
+                                 ;* DESCRIPTION: User enters digits conditionally which
+                                 ;* are then output to LED display, if the first
+                                 ;* button is pressed. If the second push button is 
+                                 ;* pressed then the the numbers in bcd_entried are
+                                 ;* taken in a a 4-digit value and displayed in HEX 
+                                 ;* this program uses interupts instead of polling
+                                 ;* 
+                                 ;* 
+                                 ;*
+                                 ;*
+                                 ;* VERSION HISTORY
+                                 ;* 1.0 Original version
+                                 ;******************************************************
+                                 
+                                 .list
+                                 
+                                 ;* Define varaibles
+                                 .dseg
+002800                           bcd_entries: .byte 4
+002804                           led_display: .byte 4
+002808                           digit_num: .byte 1
+                                 
+                                 ;Task 2
+                                 .cseg			;start of code segment
+                                 reset:
+000000 940c 0048                  	jmp start	;reset vector executed a power on
+                                 
+                                 .org PORTE_PORT_vect
+000046 940c 006e                 	jmp porte_isr;vector for all PORTE pin change IRQs
+                                 
+                                 start:
+000048 e000                      	ldi r16,0x00
+000049 b900                      	out VPORTA_DIR,r16 ; make PORTA input
+                                 	
+00004a ef0f                      	ldi r16, 0xFF ;make r16 all 1s
+00004b b90c                      	out VPORTD_DIR, r16; make portD to output
+                                 
+00004c ef00                      	ldi r16, 0xF0
+00004d b908                      	out VPORTC_DIR, r16 ;top pins of portC to output
+                                 
+00004e 9880                      	cbi VPORTE_DIR,0 ;PE0 as first pushbutton
+00004f 9882                      	cbi VPORTE_DIR,2 ;PE2 as second pushbutton
+                                 
+                                 	;Initialize vairables and arrays	
+000050 e000                      	ldi r16, 0x00;
+000051 9300 2808                 	sts digit_num, r16 ;Initialize digit_num variable
+                                 
+000053 e2d8                      	ldi YH, HIGH(bcd_entries)	;set pointer to end of array
+000054 e0c0                      	ldi YL, LOW(bcd_entries)	;set pointer to start of array
+                                 	
+000055 8308                      	std Y+0 ,r16		;initialize bcd_entried
+000056 8309                      	std Y+1 ,r16
+000057 830a                      	std Y+2 ,r16
+000058 830b                      	std Y+3 ,r16
+                                 
+000059 ef0f                      	ldi r16, 0xFF
+00005a e2b8                      	ldi XH, HIGH(led_display);set pointer to end of array
+00005b e0a4                      	ldi XL, LOW(led_display);set pointer to start of array
+                                 
+00005c 930d                      	st X+ ,r16 ;initalize LED display array
+00005d 930d                      	st X+ ,r16 ;initalize LED display array
+00005e 930d                      	st X+ ,r16 ;initalize LED display array
+00005f 930d                      	st X+ ,r16 ;initalize LED display array
+                                 
+                                 	;Configure interrupts
+000060 9100 0490                 	lds r16, PORTE_PIN0CTRL	;set ISC for PE0 to pos. edge
+000062 6002                      	ori r16, 0x02		;set ISC for rising edge
+000063 9300 0490                 	sts PORTE_PIN0CTRL, r16
+                                 
+000065 9100 0492                 	lds r16, PORTE_PIN2CTRL	;set ISC for PE2 to pos. edge
+000067 6002                      	ori r16, 0x02		;set ISC for rising edge
+000068 9300 0492                 	sts PORTE_PIN2CTRL, r16
+                                 
+00006a 9478                      	sei		;enable global interrupts
+                                 
+                                 
+                                 main_loop:	
+00006b d01c                      	rcall var_delay	;call delay
+00006c d022                      	rcall multiplex_display ;display values to LED
+                                 
+00006d cffd                      	rjmp main_loop ;loop back
+                                 
+                                 ;Interrupt service routine for any PORTE pin change IRQ
+                                 porte_ISR:
+00006e 930f                      	push r16		;save r16
+00006f 931f                      	push r17		;save r17
+000070 932f                      	push r18		;save r18
+000071 934f                      	push r20		;save r20
+000072 93df                      	push YH			;save YH pointer
+000073 93cf                      	push YL			;save YL pointer
+000074 b70f                      	in r16, CPU_SREG ;save SREG
+000075 930f                      	push r16
+000076 94f8                      	cli				;clear global interrupt enable
+                                 
+                                 	;Determine which pins of PORTE have IRQs
+000077 9100 0489                 	lds r16, PORTE_INTFLAGS	;check for PE0 IRQ flag set
+000079 fd00                      	sbrc r16, 0
+00007a d038                      	rcall poll_digit_entry		;execute subroutine for PE0
+                                 
+00007b 9100 0489                 	lds r16, PORTE_INTFLAGS	;check for PE2 IRQ flag set
+00007d fd02                      	sbrc r16, 2
+00007e d088                      	rcall pol_bcd_hex			;execute subroutine for PE2
+                                 
+00007f 910f                      	pop r16			;restore SREG then other registers
+000080 bf0f                      	out CPU_SREG, r16
+000081 91cf                      	pop YL
+000082 91df                      	pop YH
+000083 914f                      	pop r20
+000084 912f                      	pop r18
+000085 911f                      	pop r17
+000086 910f                      	pop r16
+000087 9518                      	reti			;return from PORTE pin change ISR
+                                 
+                                 ;*******************************************************
+                                 ;* 
+                                 ;* "var_delay" - Delay using registers
+                                 ;*
+                                 ;* Description: Is a program delay
+                                 ;*
+                                 ;* Author:						Ken Short
+                                 ;* Version:						1.0						
+                                 ;* Last updated:				9-20-2020
+                                 ;* Target:						ATmega4809
+                                 ;* Number of words:				7
+                                 ;* Number of cycles:			2004
+                                 ;* Low registers modified:		none	
+                                 ;* High registers modified:		r16, r17
+                                 ;*
+                                 ;* Parameters: none
+                                 ;* Returns: none
+                                 ;*
+                                 ;* Notes: 
+                                 ;*
+                                 ;***********************************************************
+                                 
+                                 var_delay:
+000088 e006                      	ldi r16, 6		;load r16 with 1-25ms
+                                 outer_loop:
+000089 e61e                      	ldi r17, 110		;load r17 with a second delay variable
+                                 inner_loop:				;delay for the total decided time.
+00008a 951a                      	dec r17
+00008b f7f1                      	brne inner_loop
+00008c 950a                      	dec r16
+00008d f7d9                      	brne outer_loop
+                                 
+00008e 9508                      	ret
+                                 
+                                 ;**************************************************
+                                 ;* 
+                                 ;* "multiplex_display"
+                                 ;*
+                                 ;* Description: outputs the segment values for the 
+                                 ;*	next multiplexed digit to be displayed and turns
+                                 ;*	ON that digit
+                                 ;*
+                                 ;* Author: Aditya Jindal
+                                 ;* Version: 1.0
+                                 ;* Last updated: 10-29-2020
+                                 ;* Target: ATmega4809
+                                 ;* Number of words: 32
+                                 ;* Number of cycles: 36
+                                 ;* Low registers modified: none
+                                 ;* High registers modified: r16, r17, r18, r20, YH, YL
+                                 ;*
+                                 ;* Parameters: none
+                                 ;* Returns: none
+                                 ;*
+                                 ;* Notes: 
+                                 ;*
+                                 ;***********************************************
+                                 
+                                 multiplex_display:
+00008f 9100 2808                 	lds r16, digit_num ;load digit num into r16
+000091 7003                      	andi r16, 0x03	;mask it to get lsb
+000092 2f10                      	mov r17,r16	;make a copy of r16
+                                 	
+000093 9310 2808                 	sts digit_num, r17	;load r17 into variable
+                                 
+000095 e0c4                      	ldi YL, LOW(led_display)	;set pointer
+000096 e2d8                      	ldi YH, HIGH(led_display)
+                                 	
+000097 9503                      	inc r16	;increment register
+                                 output_loop:
+000098 950a                      	dec r16	;decremnt register
+000099 9129                      	ld r18,Y+	;store incremented pointer value
+00009a f7e9                      	brne output_loop
+                                 
+                                 	
+00009b 3010                      	cpi r17,0 ;demux r17 to choose correct anode
+00009c f031                      	breq pos_zero	;branch to the right position
+00009d 3011                      	cpi r17,1	
+00009e f031                      	breq pos_one
+00009f 3012                      	cpi r17,2	
+0000a0 f031                      	breq pos_two
+0000a1 3013                      	cpi r17,3	
+0000a2 f031                      	breq pos_three
+                                 
+                                 pos_zero:
+0000a3 ee4f                      	ldi r20, 0xEF	;set r20 to the PC value
+0000a4 c006                      	rjmp position	;branch to position
+                                 pos_one:
+0000a5 ed4f                      	ldi r20,0xDF
+0000a6 c004                      	rjmp position
+                                 
+                                 pos_two:
+0000a7 eb4f                      	ldi r20,0xBF
+0000a8 c002                      	rjmp position
+                                 
+                                 pos_three:
+0000a9 e74f                      	ldi r20, 0x7F
+0000aa c000                      	rjmp position
+                                 
+                                 position:
+0000ab ef3f                      	ldi r19, 0xFF
+0000ac b939                      	out VPORTC_OUT, r19	;turn off digit to modigy
+0000ad b92d                      	out VPORTD_OUT, r18	;output the right segment value
+0000ae b949                      	out VPORTC_OUT, r20 ;power common anode
+0000af 9513                      	inc r17	;increment register
+0000b0 9310 2808                 	sts digit_num, r17 ;store register in variable
+0000b2 9508                      	ret
+                                 
+                                 ;*******************************************
+                                 ;* 
+                                 ;* "poll_digit_entries" - title
+                                 ;*
+                                 ;* Description: 
+                                 ;*
+                                 ;* Author: Aditya Jindal
+                                 ;* Version: 1.0
+                                 ;* Last updated: 10-29-2020
+                                 ;* Target: ATmega4809
+                                 ;* Number of words: 27
+                                 ;* Number of cycles: 282
+                                 ;* Low registers modified:
+                                 ;* High registers modified: r16,r17,r18,r19,r20,r21
+                                 ;*							ZH, ZL, YH, YL
+                                 ;*
+                                 ;* Parameters: none
+                                 ;* Returns: none
+                                 ;*
+                                 ;* Notes: 
+                                 ;*
+                                 ;*****************************************
+                                 
+                                 poll_digit_entry:
+0000b3 b102                      	in r16, VPORTA_IN	;input values into register 
+                                 	
+0000b4 d02e                      	rcall reverse_bits
+0000b5 702f                      	andi r18, 0x0F
+                                 
+0000b6 302a                      	cpi r18, 10
+0000b7 f4bc                      	brge brnch_grt_equ	;go back to main loop if not < 10
+                                 	
+0000b8 e2d8                      	ldi YH, HIGH(bcd_entries)	;set pointer to end of array
+0000b9 e0c0                      	ldi YL, LOW(bcd_entries)	;set pointer to start of array
+                                 
+                                 	;Put pointer values in register to move array
+0000ba 8138                      	ldd r19,Y+0
+0000bb 8149                      	ldd r20,Y+1
+0000bc 815a                      	ldd r21,Y+2
+                                 
+                                 	;move the array with r17 beign new value
+0000bd 8328                      	std Y+0 ,r18
+0000be 8339                      	std Y+1 ,r19
+0000bf 834a                      	std Y+2 ,r20
+0000c0 835b                      	std Y+3 ,r21
+                                 
+0000c1 e2b8                      	ldi XH, HIGH(led_display)	;set pointer to end of array
+0000c2 e0a4                      	ldi XL, LOW(led_display)	;set pointer to start of array
+                                 
+0000c3 8128                      	ldd r18, Y+0	;move bcd entry to subroutine input
+0000c4 d00e                      	rcall hex_to_7seg	;call subroutine
+0000c5 932d                      	st X+ ,r18	;store result in led array
+                                 
+0000c6 8129                      	ldd r18, Y+1	;same as before
+0000c7 d00b                      	rcall hex_to_7seg
+0000c8 932d                      	st X+ ,r18
+                                 
+0000c9 812a                      	ldd r18, Y+2	;same as first
+0000ca d008                      	rcall hex_to_7seg
+0000cb 932d                      	st X+,r18
+                                 
+0000cc 812b                      	ldd r18, Y+3	;same as first
+0000cd d005                      	rcall hex_to_7seg
+0000ce 932d                      	st X+,r18
+                                 
+                                 brnch_grt_equ:
+0000cf e001                      	ldi r16, PORT_INT0_bm	;clear IRQ flag for PE0
+0000d0 9300 0489                 	sts PORTE_INTFLAGS, r16
+0000d2 9508                      	ret	;return when done
+                                 
+                                 
+                                 ;****************************************
+                                 ;* 
+                                 ;* "hex_to_7seg" - Hexadecimal to Seven Segment Conversion
+                                 ;*
+                                 ;* Description: Converts a right justified hexadecimal digit 
+                                 ;*to the seven segment pattern required to display it. 
+                                 ;*Pattern is right justified a through g. 
+                                 ;*Pattern uses 0s to turn segments on ON.
+                                 ;*
+                                 ;* Author:						Ken Short
+                                 ;* Version:						1.0						
+                                 ;* Last updated:				101620
+                                 ;* Target:						ATmega4809
+                                 ;* Number of words:				8
+                                 ;* Number of cycles:			13
+                                 ;* Low registers modified:		none		
+                                 ;* High registers modified:		r16, r18, ZL, ZH
+                                 ;*
+                                 ;* Parameters: r18: right justified hex digit, high nibble 0
+                                 ;* Returns: r18: segment values a through g right justified
+                                 ;*
+                                 ;* Notes: 
+                                 ;*
+                                 ;****************************************
+                                 
+                                 hex_to_7seg:
+0000d3 702f                      	andi r18, 0x0F				;clear ms nibble
+0000d4 e0f1                          ldi ZH, HIGH(hextable * 2)  ;set Z to point start table
+0000d5 ebe6                          ldi ZL, LOW(hextable * 2)
+0000d6 e000                          ldi r16, $00                ;add offset to Z pointer
+0000d7 0fe2                          add ZL, r18
+0000d8 1ff0                          adc ZH, r16
+0000d9 9124                          lpm r18, Z                  ;load byte from table
+0000da 9508                      	ret
+                                 
+                                     ;Table of segment values to display digits 0 - F
+                                     ;!!! seven values must be added - verify all values
+0000db 4f01
+0000dc 0612
+0000dd 244c
+0000de 0f20
+0000df 0c00
+0000e0 6008
+0000e1 4231
+0000e2 3830                      hextable: .db $01,$4F,$12,$06,$4C,$24,$20,$0F,$00,$0C,$08,$60,$31,$42,$30,$38
+                                 
+                                 ;*******************************************************
+                                 ;* 
+                                 ;* "reverse_bits" - Reverse the order of a registers bits
+                                 ;*
+                                 ;* Description: Subroutine reverses the order of a register
+                                 ;*
+                                 ;* Author:						Aditya Jindal
+                                 ;* Version:						1.0						
+                                 ;* Last updated:				10202020
+                                 ;* Target:						ATmega4809
+                                 ;* Number of words:				11
+                                 ;* Number of cycles:			63
+                                 ;* Low registers modified:		none	
+                                 ;* High registers modified:		r16, r17, r18, r19
+                                 ;*
+                                 ;* Parameters: r16: with loaded register value
+                                 ;* Returns: r18: reversed register value
+                                 ;*
+                                 ;* Notes: 
+                                 ;*
+                                 ;***********************************************************
+                                 
+                                 reverse_bits:
+0000e3 e018                      	ldi r17, 8		;have a counter
+                                 reverse_bit_loop:
+0000e4 0f00                      	lsl r16			;move r16
+0000e5 9527                      	ror r18
+0000e6 951a                      	dec r17			;decrement counter
+0000e7 f7e1                      	brne reverse_bit_loop
+                                 	
+0000e8 9508                      	ret	;return after counter done
+                                 
+                                 
+                                 ;********************************************
+                                 ;*
+                                 ;* "BCD2bin16" - BCD to 16-Bit Binary Conversion
+                                 ;*
+                                 ;* This subroutine converts a 5-digit 
+                                 ;* packed BCD number represented by 3 bytes 
+                                 ;* (fBCD2:fBCD1:fBCD0) to a 16-bit number (tbinH:tbinL). 
+                                 ;* MSD of the 5-digit number must be placed 
+                                 ;* in the lowermost nibble of fBCD2.
+                                 ;*
+                                 ;* Let "abcde" denote the 5-digit number. 
+                                 ;* The conversion is done by computing the formula: 
+                                 ;* 10(10(10(10a+b)+c)+d)+e. The subroutine "mul10a"/"mul10b" 
+                                 ;* does the multiply-and-add operation which is repeated
+                                 ;* four times during the computation.
+                                 ;*
+                                 ;* Number of words	:30
+                                 ;* Number of cycles	:108
+                                 ;* Low registers used	:4 
+                                 ;*						(copyL,copyH,mp10L/tbinL,mp10H/tbinH)
+                                 ;* High registers used  :4 (fBCD0,fBCD1,fBCD2,adder)	
+                                 ;*
+                                 ;***************************************************
+                                 
+                                 ;***** "mul10a"/"mul10b" Subroutine Register Variables
+                                 
+                                 .def	copyL	=r12	;temporary register
+                                 .def	copyH	=r13	;temporary register
+                                 .def	mp10L	=r14	;Low byte of number to be multiplied by 10
+                                 .def	mp10H	=r15	;High byte of number to be multiplied by 10
+                                 .def	adder	=r19	;value to add after multiplication	
+                                 
+                                 ;***** Code
+                                 
+                                 mul10a:	;***** multiplies 
+                                 ;*"mp10H:mp10L" with 10 and adds "adder" high nibble
+0000e9 9532                      	swap	adder
+                                 mul10b:	;***** multiplies 
+                                 ;*"mp10H:mp10L" with 10 and adds "adder" low nibble
+0000ea 2cce                      	mov	copyL,mp10L	;make copy
+0000eb 2cdf                      	mov	copyH,mp10H
+0000ec 0cee                      	lsl	mp10L	;multiply original by 2
+0000ed 1cff                      	rol	mp10H
+0000ee 0ccc                      	lsl	copyL	;multiply copy by 2
+0000ef 1cdd                      	rol	copyH		
+0000f0 0ccc                      	lsl	copyL	;multiply copy by 2 (4)
+0000f1 1cdd                      	rol	copyH		
+0000f2 0ccc                      	lsl	copyL	;multiply copy by 2 (8)
+0000f3 1cdd                      	rol	copyH		
+0000f4 0cec                      	add	mp10L,copyL	;add copy to original
+0000f5 1cfd                      	adc	mp10H,copyH	
+0000f6 703f                      	andi	adder,0x0f	;mask away upper nibble of adder
+0000f7 0ee3                      	add	mp10L,adder	;add lower nibble of adder
+0000f8 f408                      	brcc	m10_1		;if carry not cleared
+0000f9 94f3                      	inc	mp10H		;	inc high byte
+0000fa 9508                      m10_1:	ret	
+                                 
+                                 ;***** Main Routine Register Variables
+                                 
+                                 .def	tbinL	=r14	;Low byte of binary result (same as mp10L)
+                                 .def	tbinH	=r15	;High byte of binary result (same as mp10H)
+                                 .def	fBCD0	=r16	;BCD value digits 1 and 0
+                                 .def	fBCD1	=r17	;BCD value digits 2 and 3
+                                 .def	fBCD2	=r18	;BCD value digit 5
+                                 
+                                 ;***** Code
+                                 
+                                 BCD2bin16:
+0000fb 702f                      	andi	fBCD2,0x0f	;mask away upper nibble of fBCD2
+0000fc 24ff                      	clr	mp10H		
+0000fd 2ee2                      	mov	mp10L,fBCD2	;mp10H:mp10L = a
+0000fe 2f31                      	mov	adder,fBCD1
+0000ff dfe9                      	rcall	mul10a		;mp10H:mp10L = 10a+b
+000100 2f31                      	mov	adder,fBCD1
+000101 dfe8                      	rcall	mul10b		;mp10H:mp10L = 10(10a+b)+c
+000102 2f30                      	mov	adder,fBCD0		
+000103 dfe5                      	rcall	mul10a		;mp10H:mp10L = 10(10(10a+b)+c)+d
+000104 2f30                      	mov	adder,fBCD0
+000105 dfe4                      	rcall	mul10b		;mp10H:mp10L = 10(10(10(10a+b)+c)+d)+e
+000106 9508                      	ret
+                                 
+                                 ;**************************************************
+                                 ;* 
+                                 ;* "poll_bcd_hex" - Polls Pushbutton 2 for Conditional
+                                 ;*	Conversion of BCD to Hex.
+                                 ;*
+                                 ;* Description:
+                                 ;* Polls the flag associated with pushbutton 2. This flag
+                                 ;* is connected to PE2. If the flag is set, the digits in the
+                                 ;* bcd_entires array are read and passed to the prewritten
+                                 ;* subroutine BCD2bin16. This subroutine performs a BCD to
+                                 ;* binary conversion. The binary result is partitioned into
+                                 ;* hexadecimal and placed into the array hex_results. The
+                                 ;* contents of the hex_results array is converted to seven
+                                 ;* segemnt values and placed into the led_display array.
+                                 ;*
+                                 ;* Author: Aditya Jindal
+                                 ;* Version: 1.0
+                                 ;* Last updated: 10-30-2020
+                                 ;* Target: ATmega4809
+                                 ;* Number of words:
+                                 ;* Number of cycles:
+                                 ;* Low registers modified:
+                                 ;* High registers modified:
+                                 ;*
+                                 ;* Parameters: none
+                                 ;* Returns: none
+                                 ;*
+                                 ;* Notes: 
+                                 ;*
+                                 ;***********************************************
+                                 
+                                 pol_bcd_hex:
+000107 e2d8                      	ldi YH, HIGH(bcd_entries)	;set pointer to end of array
+000108 e0c0                      	ldi YL, LOW(bcd_entries)	;set pointer to start of array
+                                 
+                                 
+000109 811b                      	ldd r17, Y+3	;load last value in bcd
+00010a 812a                      	ldd r18, Y+2	;load second to last value
+                                 
+00010b 0f11                      	lsl r17			;shift first value to msb
+00010c 0f11                      	lsl r17
+00010d 0f11                      	lsl r17
+00010e 0f11                      	lsl r17
+                                 
+00010f 2b12                      	or r17, r18		;make r17 parameter
+                                 
+000110 8109                      	ldd r16, Y+1	;load last value in bcd
+000111 8128                      	ldd r18, Y+0	;load second to last value
+                                 
+000112 0f00                      	lsl r16			;shift first value to msb
+000113 0f00                      	lsl r16
+000114 0f00                      	lsl r16
+000115 0f00                      	lsl r16
+                                 
+000116 2b02                      	or r16, r18		;cobine values
+                                 
+000117 e020                      	ldi r18, 0x00	;fill one parameter
+                                 
+000118 dfe2                      	rcall BCD2bin16	;call subroutine
+                                 
+000119 e2b8                      	ldi XH, HIGH(led_display)	;set pointer to end of array
+00011a e0a4                      	ldi XL, LOW(led_display)	;set pointer to start of array
+                                 
+00011b 2d2e                      	mov r18, r14
+00011c dfb6                      	rcall hex_to_7seg	;call subroutine
+00011d 932d                      	st X+ ,r18	;store result in led array
+                                 
+00011e 2d2e                      	mov r18, r14
+00011f 9526                      	lsr r18			;shift first value to msb
+000120 9526                      	lsr r18
+000121 9526                      	lsr r18
+000122 9526                      	lsr r18
+                                 	
+000123 dfaf                      	rcall hex_to_7seg
+000124 932d                      	st X+ ,r18
+                                 
+000125 2d2f                      	mov r18, r15
+000126 dfac                      	rcall hex_to_7seg
+000127 932d                      	st X+,r18
+                                 
+000128 2d2f                      	mov r18, r15
+000129 9526                      	lsr r18			;shift first value to msb
+00012a 9526                      	lsr r18
+00012b 9526                      	lsr r18
+00012c 9526                      	lsr r18
+                                 	
+00012d dfa5                      	rcall hex_to_7seg
+00012e 932d                      	st X+,r18
+                                 
+00012f e004                      	ldi r16, PORT_INT2_bm	;clear IRQ flag for PE2
+000130 9300 0489                 	sts PORTE_INTFLAGS, r16
+
+
+RESOURCE USE INFORMATION
+------------------------
+
+Notice:
+The register and instruction counts are symbol table hit counts,
+and hence implicitly used resources are not counted, eg, the
+'lpm' instruction without operands implicitly uses r0 and z,
+none of which are counted.
+
+x,y,z are separate entities in the symbol table and are
+counted separately from r26..r31 here.
+
+.dseg memory usage only counts static data declared with .byte
+
+"ATmega4809" register use summary:
+x  :  12 y  :  20 z  :   1 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
+r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   5 
+r13:   5 r14:   7 r15:   7 r16:  56 r17:  22 r18:  42 r19:  11 r20:   9 
+r21:   2 r22:   0 r23:   0 r24:   0 r25:   0 r26:   3 r27:   3 r28:   6 
+r29:   6 r30:   2 r31:   2 
+Registers used: 19 out of 35 (54.3%)
+
+"ATmega4809" instruction use summary:
+.lds  :   0 .sts  :   0 adc   :   2 add   :   3 adiw  :   0 and   :   0 
+andi  :   5 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+brcc  :   1 brcs  :   0 break :   0 breq  :   4 brge  :   1 brhc  :   0 
+brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
+brne  :   4 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   2 cbr   :   0 
+clc   :   0 clh   :   0 cli   :   1 cln   :   0 clr   :   1 cls   :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
+cpi   :   5 cpse  :   0 dec   :   4 des   :   0 eor   :   0 fmul  :   0 
+fmuls :   0 fmulsu:   0 icall :   0 ijmp  :   0 in    :   2 inc   :   3 
+jmp   :   2 ld    :   1 ldd   :  11 ldi   :  33 lds   :   5 lpm   :   2 
+lsl   :  13 lsr   :   8 mov   :  12 movw  :   0 mul   :   0 muls  :   0 
+mulsu :   0 neg   :   0 nop   :   0 or    :   2 ori   :   2 out   :   7 
+pop   :   7 push  :   7 rcall :  18 ret   :   8 reti  :   1 rjmp  :   5 
+rol   :   4 ror   :   1 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 
+sbis  :   0 sbiw  :   0 sbr   :   0 sbrc  :   2 sbrs  :   0 sec   :   0 
+seh   :   0 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 
+sev   :   0 sez   :   0 sleep :   0 spm   :   0 st    :  12 std   :   8 
+sts   :   7 sub   :   0 subi  :   0 swap  :   1 tst   :   0 wdr   :   0 
+
+Instructions used: 40 out of 114 (35.1%)
+
+"ATmega4809" memory use summary [bytes]:
+Segment   Begin    End      Code   Data   Used    Size   Use%
+---------------------------------------------------------------
+[.cseg] 0x000000 0x000266    462     16    478   49152   1.0%
+[.dseg] 0x002800 0x002809      0      9      9    6144   0.1%
+[.eseg] 0x000000 0x000000      0      0      0     256   0.0%
+
+Assembly complete, 0 errors, 2 warnings
